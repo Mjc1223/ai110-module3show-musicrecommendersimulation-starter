@@ -1,3 +1,4 @@
+import csv
 from typing import List, Dict, Tuple, Optional
 from dataclasses import dataclass
 
@@ -46,28 +47,83 @@ class Recommender:
         return "Explanation placeholder"
 
 def load_songs(csv_path: str) -> List[Dict]:
-    """
-    Loads songs from a CSV file.
-    Required by src/main.py
-    """
-    # TODO: Implement CSV loading logic
-    print(f"Loading songs from {csv_path}...")
-    return []
+    """Load songs from a CSV file into a list of dictionaries."""
+    songs: List[Dict] = []
+
+    with open(csv_path, newline="", encoding="utf-8") as csvfile:
+        reader = csv.DictReader(csvfile)
+        for row in reader:
+            song = {
+                "id": int(row["id"]),
+                "title": row["title"],
+                "artist": row["artist"],
+                "genre": row["genre"],
+                "mood": row["mood"],
+                "energy": float(row["energy"]),
+                "tempo_bpm": int(row["tempo_bpm"]),
+                "valence": float(row["valence"]),
+                "danceability": float(row["danceability"]),
+                "acousticness": float(row["acousticness"]),
+            }
+            songs.append(song)
+
+    return songs
 
 def score_song(user_prefs: Dict, song: Dict) -> Tuple[float, List[str]]:
-    """
-    Scores a single song against user preferences.
-    Required by recommend_songs() and src/main.py
-    """
-    # TODO: Implement scoring logic using your Algorithm Recipe from Phase 2.
-    # Expected return format: (score, reasons)
-    return []
+    """Score a song against a user's preferences and return reasons."""
+    score = 0.0
+    reasons: List[str] = []
+
+    # Compare genre using a strong bonus for exact matches.
+    preferred_genre = user_prefs.get("favorite_genre", user_prefs.get("genre"))
+    song_genre = song.get("genre")
+    if preferred_genre is not None and song_genre is not None:
+        if str(preferred_genre).lower() == str(song_genre).lower():
+            score += 2.0
+            reasons.append("Genre match (+2.0)")
+
+    # Compare mood using a smaller but meaningful bonus.
+    preferred_mood = user_prefs.get("favorite_mood", user_prefs.get("mood"))
+    song_mood = song.get("mood")
+    if preferred_mood is not None and song_mood is not None:
+        if str(preferred_mood).lower() == str(song_mood).lower():
+            score += 1.0
+            reasons.append("Mood match (+1.0)")
+
+    # Compare energy similarity on a 0.0 to 1.0 scale.
+    # A closer match receives more points, and a larger difference receives fewer.
+    target_energy = user_prefs.get("target_energy", user_prefs.get("energy"))
+    song_energy = song.get("energy")
+    if target_energy is not None and song_energy is not None:
+        try:
+            target_energy_value = float(target_energy)
+            song_energy_value = float(song_energy)
+            energy_similarity = max(0.0, 1.0 - abs(song_energy_value - target_energy_value))
+            score += energy_similarity
+            reasons.append(f"Energy similarity (+{energy_similarity:.2f})")
+        except (TypeError, ValueError):
+            reasons.append("Energy similarity skipped (invalid values)")
+    else:
+        reasons.append("Energy similarity skipped (missing values)")
+
+    return round(score, 2), reasons
 
 def recommend_songs(user_prefs: Dict, songs: List[Dict], k: int = 5) -> List[Tuple[Dict, float, str]]:
-    """
-    Functional implementation of the recommendation logic.
-    Required by src/main.py
-    """
-    # TODO: Implement scoring and ranking logic
-    # Expected return format: (song_dict, score, explanation)
-    return []
+    """Rank and return the top-scoring songs for a user."""
+    scored_recommendations: List[Tuple[Dict, float, str]] = []
+
+    # Score each song and keep the score plus explanation together.
+    for song in songs:
+        score, reasons = score_song(user_prefs, song)
+        explanation = "; ".join(reasons)
+        scored_recommendations.append((song, score, explanation))
+
+    # Sort all scored songs from highest score to lowest score.
+    ranked_recommendations = sorted(
+        scored_recommendations,
+        key=lambda item: item[1],
+        reverse=True,
+    )
+
+    # Return only the top k recommendations.
+    return ranked_recommendations[:k]

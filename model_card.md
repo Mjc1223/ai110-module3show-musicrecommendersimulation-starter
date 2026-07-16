@@ -21,14 +21,11 @@ Prompts:
 
 ## 3. How the Model Works  
 
-Explain your scoring approach in simple language.  
+Major music streaming platforms such as Spotify, Apple Music, and YouTube Music recommend songs by trying to predict what a listener will enjoy next. A common approach is collaborative filtering, which uses the behavior of many users. If two users listen to similar songs, save similar artists, or skip similar tracks, the system may recommend songs that one user has enjoyed but the other has not heard yet. Another approach is content-based filtering, which recommends songs based on the characteristics of the songs themselves, such as genre, mood, tempo, energy, artist, and acoustic features.
 
-Prompts:  
+Collaborative filtering is useful because it can find patterns that are not obvious from the song itself. For example, it may recommend a song because many users with similar listening habits also liked it. Its main weakness is that it needs a lot of user interaction data, and it can struggle with new songs or new users who do not have much history yet. Content-based filtering works well for new songs because it does not depend on other users. However, it may recommend songs that are too similar to what the user already knows, which can reduce variety.
 
-- What features of each song are used (genre, energy, mood, etc.)  
-- What user preferences are considered  
-- How does the model turn those into a score  
-- What changes did you make from the starter logic  
+In real systems, these methods are usually combined into a hybrid recommender. The system may use collaborative filtering to find songs that similar users liked, and content-based filtering to make sure the songs match the user’s known musical preferences. This hybrid approach helps improve both accuracy and personalization.
 
 Avoid code here. Pretend you are explaining the idea to a friend who does not program.
 
@@ -36,7 +33,7 @@ Avoid code here. Pretend you are explaining the idea to a friend who does not pr
 
 ## 4. Data  
 
-Describe the dataset the model uses.  
+The data used by these recommendation systems usually falls into two main categories: user behavior data and song attribute data. User behavior data includes listening history, play counts, skips, replays, likes, saves, follows, playlist additions, and the amount of time a person listens before switching songs. Song attribute data includes genre, artist, release year, language, mood, tempo, energy, danceability, and acoustic features. These signals help the system learn both what users enjoy and what kinds of songs fit those preferences.
 
 Prompts:  
 
