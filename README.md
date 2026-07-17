@@ -99,47 +99,408 @@ You can add more tests in `tests/test_recommender.py`.
 
 ## Sample Recommendation Output
 
-Paste a sample of your recommender's output here as a text block so a reader can see what it produces:
+Here is a representative sample of the recommender output from the terminal for the four evaluation profiles:
+
+```text
+Profile: High-Energy Pop
+----------------------------------------
 1. Sunrise City
-   Score: 3.98
+   Score: 3.92
    Reasons:
      - Genre match (+2.0)
      - Mood match (+1.0)
-     - Energy similarity (+0.98)
+     - Energy similarity (+0.92)
 
 2. Gym Hero
-   Score: 2.87
+   Score: 2.97
    Reasons:
      - Genre match (+2.0)
-     - Energy similarity (+0.87)
+     - Energy similarity (+0.97)
 
 3. Rooftop Lights
-   Score: 1.96
+   Score: 1.86
    Reasons:
+     - Mood match (+1.0)
+     - Energy similarity (+0.86)
+
+4. Storm Runner
+   Score: 0.99
+   Reasons:
+     - Energy similarity (+0.99)
+
+5. Backstreet Sparks
+   Score: 0.98
+   Reasons:
+     - Energy similarity (+0.98)
+```
+
+```text
+Profile: Chill Lofi
+----------------------------------------
+1. Library Rain
+   Score: 4.00
+   Reasons:
+     - Genre match (+2.0)
+     - Mood match (+1.0)
+     - Energy similarity (+1.00)
+
+2. Midnight Coding
+   Score: 3.93
+   Reasons:
+     - Genre match (+2.0)
+     - Mood match (+1.0)
+     - Energy similarity (+0.93)
+
+3. Focus Flow
+   Score: 2.95
+   Reasons:
+     - Genre match (+2.0)
+     - Energy similarity (+0.95)
+
+4. Spacewalk Thoughts
+   Score: 1.93
+   Reasons:
+     - Mood match (+1.0)
+     - Energy similarity (+0.93)
+
+5. Coffee Shop Stories
+   Score: 0.98
+   Reasons:
+     - Energy similarity (+0.98)
+```
+
+```text
+Profile: Deep Intense Rock
+----------------------------------------
+1. Storm Runner
+   Score: 3.96
+   Reasons:
+     - Genre match (+2.0)
      - Mood match (+1.0)
      - Energy similarity (+0.96)
 
-4. Neon Skyline
-   Score: 0.99
+2. Gym Hero
+   Score: 1.98
    Reasons:
-     - Energy similarity (+0.99)
+     - Mood match (+1.0)
+     - Energy similarity (+0.98)
 
-5. Velvet Static
-   Score: 0.99
+3. Backstreet Sparks
+   Score: 0.93
    Reasons:
-     - Energy similarity (+0.99)
+     - Energy similarity (+0.93)
+
+4. Sunrise City
+   Score: 0.87
+   Reasons:
+     - Energy similarity (+0.87)
+
+5. Neon Skyline
+   Score: 0.86
+   Reasons:
+     - Energy similarity (+0.86)
 ```
 
+```text
+Profile: Conflicting Edge Case
+----------------------------------------
+1. Sunrise City
+   Score: 3.38
+   Reasons:
+     - Genre match (+2.0)
+     - Mood match (+1.0)
+     - Energy similarity (+0.38)
+
+2. Gym Hero
+   Score: 2.27
+   Reasons:
+     - Genre match (+2.0)
+     - Energy similarity (+0.27)
+
+3. Rooftop Lights
+   Score: 1.44
+   Reasons:
+     - Mood match (+1.0)
+     - Energy similarity (+0.44)
+
+4. Paper Skyline
+   Score: 1.00
+   Reasons:
+     - Energy similarity (+1.00)
+
+5. Spacewalk Thoughts
+   Score: 0.92
+   Reasons:
+     - Energy similarity (+0.92)
+```
 
 ---
 
 ## Experiments You Tried
 
-Use this section to document the experiments you ran. For example:
+### Weight experiment: half genre weight, double energy weight
 
-- What happened when you changed the weight on genre from 2.0 to 0.5
-- What happened when you added tempo or valence to the score
-- How did your system behave for different types of users
+Experiment setup:
+
+- Original scoring: genre match = +2.0, mood match = +1.0, energy similarity = up to +1.0
+- Experimental scoring: genre match = +1.0, mood match = +1.0, energy similarity = up to +2.0
+
+Baseline terminal output (original scoring weights):
+
+```text
+Profile: High-Energy Pop
+----------------------------------------
+1. Sunrise City
+   Score: 3.92
+   Reasons:
+     - Genre match (+2.0)
+     - Mood match (+1.0)
+     - Energy similarity (+0.92)
+
+2. Gym Hero
+   Score: 2.97
+   Reasons:
+     - Genre match (+2.0)
+     - Energy similarity (+0.97)
+
+3. Rooftop Lights
+   Score: 1.86
+   Reasons:
+     - Mood match (+1.0)
+     - Energy similarity (+0.86)
+
+4. Storm Runner
+   Score: 0.99
+   Reasons:
+     - Energy similarity (+0.99)
+
+5. Backstreet Sparks
+   Score: 0.98
+   Reasons:
+     - Energy similarity (+0.98)
+
+Profile: Chill Lofi
+----------------------------------------
+1. Library Rain
+   Score: 4.00
+   Reasons:
+     - Genre match (+2.0)
+     - Mood match (+1.0)
+     - Energy similarity (+1.00)
+
+2. Midnight Coding
+   Score: 3.93
+   Reasons:
+     - Genre match (+2.0)
+     - Mood match (+1.0)
+     - Energy similarity (+0.93)
+
+3. Focus Flow
+   Score: 2.95
+   Reasons:
+     - Genre match (+2.0)
+     - Energy similarity (+0.95)
+
+4. Spacewalk Thoughts
+   Score: 1.93
+   Reasons:
+     - Mood match (+1.0)
+     - Energy similarity (+0.93)
+
+5. Coffee Shop Stories
+   Score: 0.98
+   Reasons:
+     - Energy similarity (+0.98)
+
+Profile: Deep Intense Rock
+----------------------------------------
+1. Storm Runner
+   Score: 3.96
+   Reasons:
+     - Genre match (+2.0)
+     - Mood match (+1.0)
+     - Energy similarity (+0.96)
+
+2. Gym Hero
+   Score: 1.98
+   Reasons:
+     - Mood match (+1.0)
+     - Energy similarity (+0.98)
+
+3. Backstreet Sparks
+   Score: 0.93
+   Reasons:
+     - Energy similarity (+0.93)
+
+4. Sunrise City
+   Score: 0.87
+   Reasons:
+     - Energy similarity (+0.87)
+
+5. Neon Skyline
+   Score: 0.86
+   Reasons:
+     - Energy similarity (+0.86)
+
+Profile: Conflicting Edge Case
+----------------------------------------
+1. Sunrise City
+   Score: 3.38
+   Reasons:
+     - Genre match (+2.0)
+     - Mood match (+1.0)
+     - Energy similarity (+0.38)
+
+2. Gym Hero
+   Score: 2.27
+   Reasons:
+     - Genre match (+2.0)
+     - Energy similarity (+0.27)
+
+3. Rooftop Lights
+   Score: 1.44
+   Reasons:
+     - Mood match (+1.0)
+     - Energy similarity (+0.44)
+
+4. Paper Skyline
+   Score: 1.00
+   Reasons:
+     - Energy similarity (+1.00)
+
+5. Spacewalk Thoughts
+   Score: 0.92
+   Reasons:
+     - Energy similarity (+0.92)
+```
+
+Experimental terminal output (genre halved, energy doubled):
+
+```text
+Profile: High-Energy Pop
+----------------------------------------
+1. Sunrise City
+   Score: 3.84
+   Reasons:
+     - Genre match (+1.0)
+     - Mood match (+1.0)
+     - Energy similarity (+1.84)
+
+2. Gym Hero
+   Score: 2.94
+   Reasons:
+     - Genre match (+1.0)
+     - Energy similarity (+1.94)
+
+3. Rooftop Lights
+   Score: 2.72
+   Reasons:
+     - Mood match (+1.0)
+     - Energy similarity (+1.72)
+
+4. Storm Runner
+   Score: 1.98
+   Reasons:
+     - Energy similarity (+1.98)
+
+5. Backstreet Sparks
+   Score: 1.96
+   Reasons:
+     - Energy similarity (+1.96)
+
+Profile: Chill Lofi
+----------------------------------------
+1. Library Rain
+   Score: 4.00
+   Reasons:
+     - Genre match (+1.0)
+     - Mood match (+1.0)
+     - Energy similarity (+2.00)
+
+2. Midnight Coding
+   Score: 3.86
+   Reasons:
+     - Genre match (+1.0)
+     - Mood match (+1.0)
+     - Energy similarity (+1.86)
+
+3. Focus Flow
+   Score: 2.90
+   Reasons:
+     - Genre match (+1.0)
+     - Energy similarity (+1.90)
+
+4. Spacewalk Thoughts
+   Score: 2.86
+   Reasons:
+     - Mood match (+1.0)
+     - Energy similarity (+1.86)
+
+5. Coffee Shop Stories
+   Score: 1.96
+   Reasons:
+     - Energy similarity (+1.96)
+
+Profile: Deep Intense Rock
+----------------------------------------
+1. Storm Runner
+   Score: 3.92
+   Reasons:
+     - Genre match (+1.0)
+     - Mood match (+1.0)
+     - Energy similarity (+1.92)
+
+2. Gym Hero
+   Score: 2.96
+   Reasons:
+     - Mood match (+1.0)
+     - Energy similarity (+1.96)
+
+3. Backstreet Sparks
+   Score: 1.86
+   Reasons:
+     - Energy similarity (+1.86)
+
+4. Sunrise City
+   Score: 1.74
+   Reasons:
+     - Energy similarity (+1.74)
+
+5. Neon Skyline
+   Score: 1.72
+   Reasons:
+     - Energy similarity (+1.72)
+
+Profile: Conflicting Edge Case
+----------------------------------------
+1. Sunrise City
+   Score: 2.76
+   Reasons:
+     - Genre match (+1.0)
+     - Mood match (+1.0)
+     - Energy similarity (+0.76)
+
+2. Paper Skyline
+   Score: 2.00
+   Reasons:
+     - Energy similarity (+2.00)
+
+3. Rooftop Lights
+   Score: 1.88
+   Reasons:
+     - Mood match (+1.0)
+     - Energy similarity (+0.88)
+
+4. Spacewalk Thoughts
+   Score: 1.84
+   Reasons:
+     - Energy similarity (+1.84)
+
+5. Quiet Harbor
+   Score: 1.78
+   Reasons:
+     - Energy similarity (+1.78)
+```
 
 ---
 
@@ -159,7 +520,6 @@ Potential biases:
 - The system also depends on manually assigned song features, so inaccurate labels or numerical values could affect the recommendations.
 - Because the user profile contains specific target values, the recommender may favor songs that are very similar and provide less variety or discovery.
 
-You will go deeper on this in your model card.
 
 ---
 
@@ -169,10 +529,11 @@ Read and complete `model_card.md`:
 
 [**Model Card**](model_card.md)
 
-Write 1 to 2 paragraphs here about what you learned:
+This project helped me understand that recommender systems are shaped by the rules and weights we choose, not by an objective definition of what is "best." In this simulation, predictions came from comparing profile features (genre, mood, energy) against song attributes and adding weighted points. I learned that even small scoring decisions can strongly affect ranking outcomes, and that the recommendation list is really a reflection of design choices in the model.
 
-- about how recommenders turn data into predictions
-- about where bias or unfairness could show up in systems like this
+One of the most interesting results came from testing the conflicting edge-case profile, where some songs still ranked highly even when one feature did not match well. That showed me how a few strong weighted factors can overpower other signals and create uneven outcomes. It also made me think more critically about real music apps: they can unintentionally reinforce familiar content, limit discovery, and introduce bias unless they include feedback loops, diversity mechanisms, and fairness checks.
+
+Using AI tools helped me move faster when drafting explanations, comparing profile outputs, and organizing findings in both the README and model card. I still needed to double-check the AI output whenever specific numbers, score reasons, or ranking claims were involved, because those details had to match the real terminal runs from my code. If I extended this project next, I would add more user preference signals (like tempo and valence), use lightweight feedback updates from user actions (skip/like/replay), and test a diversity-aware re-ranking step so recommendations stay relevant while reducing filter-bubble behavior.
 
 
 
