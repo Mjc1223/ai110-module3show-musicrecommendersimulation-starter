@@ -2,16 +2,15 @@
 
 ## Project Summary
 
-In this project you will build and explain a small music recommender system.
+This project simulates a content-based music recommendation system that generates personalized song recommendations using a weighted scoring algorithm. The recommender compares a listener's preferred genre, mood, and target energy level to songs in a catalog, ranks them by similarity, and explains why each recommendation was selected.
 
-Your goal is to:
+The goal of this project is to:
 
-- Represent songs and a user "taste profile" as data
-- Design a scoring rule that turns that data into recommendations
-- Evaluate what your system gets right and wrong
-- Reflect on how this mirrors real world AI recommenders
-
-Replace this paragraph with your own summary of what your version does.
+- Generate personalized song recommendations based on genre, mood, and target energy level
+- Rank songs using a weighted scoring algorithm that compares listener preferences to song attributes
+- Provide transparent explanations for why each song was recommended
+- Demonstrate how content-based recommendation systems generate recommendations using structured song features
+- Explore how feature weighting and algorithm design can influence recommendation results and introduce bias
 
 ---
 
